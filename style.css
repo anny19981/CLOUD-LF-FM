@@ -107,4 +107,37 @@ body {
     z-index: 2;
 }
 
+.menu {
+    margin-top: 20px;
+}
+
+.menu input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    background: #282828;
+    color: white;
+}
+
+.library h3 {
+    margin: 15px 0 5px;
+    font-size: 14px;
+    color: #aaa;
+}
+
+.artist,
+.song {
+    padding: 8px 5px;
+    cursor: pointer;
+    border-bottom: 1px solid #222;
+    display: flex;
+    justify-content: space-between;
+}
+
+.artist:hover,
+.song:hover {
+    background: #1e1e1e;
+}
 
