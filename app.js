@@ -8,16 +8,79 @@ const songs = [
   },
   {
     id: 1,
-    title: "Song Zwei",
-    artist: "Artist B",
-    file: "song2.mp3",
+    title: "buben-boot",
+    artist: "Rolexander",
+    file: "buben-boot-(remastered-x2).mp3",
     cover: "cover2.jpg"
   },
   {
     id: 2,
-    title: "Song Drei",
-    artist: "Artist C",
-    file: "song3.mp3",
+    title: "lan-party",
+    artist: "Rolexander",
+    file: "lan-party--(remastered).mp3",
+    cover: "cover3.jpg"
+  },
+    {
+    id: 3,
+    title: "lars-der-boss",
+    artist: "Rolexander",
+    file: "lars-der-boss.mp3",
+    cover: "cover3.jpg"
+  },
+    {
+    id: 4,
+    title: "the boys",
+    artist: "Rolexander",
+    file: "the-boys.mp3",
+    cover: "cover3.jpg"
+  },
+    {
+    id: 5,
+    title: "Level für Level",
+    artist: "Rolexander",
+    file: "level-fu╠êr-level.mp3",
+    cover: "cover3.jpg"
+  }, 
+    {
+    id: 6,
+    title: "Luis der Technik-Man",
+    artist: "Rolexander",
+    file: "luis-der-technik-man.mp3",
+    cover: "cover3.jpg"
+  },
+  {
+    id: 7,
+    title: "Mango Marcel",
+    artist: "Rolexander",
+    file: "mango-marcel.mp3",
+    cover: "cover3.jpg"
+  },
+  {
+    id: 8,
+    title: "Mein Schacko",
+    artist: "Rolexander",
+    file: "mein-schackoo.mp3",
+    cover: "cover3.jpg"
+  },
+   {
+    id: 9,
+    title: "Paulo",
+    artist: "Rolexander",
+    file: "paulo.mp3",
+    cover: "cover3.jpg"
+  },
+   {
+    id: 10,
+    title: "Oh Philip",
+    artist: "Rolexander",
+    file: "oh-philip.mp3",
+    cover: "cover3.jpg"
+  }, 
+  {
+    id: 11,
+    title: "Meine Jungs",
+    artist: "Rolexander",
+    file: "meine-jungs.mp3",
     cover: "cover3.jpg"
   }
 ];
