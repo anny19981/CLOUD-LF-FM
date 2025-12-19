@@ -18,6 +18,7 @@ const songs = [
     cover: "cover3.jpg"
   }
 ];
+const artists = [...new Set(songs.map(s => s.artist))];
 
 const audio = document.getElementById("audio");
 const cover = document.getElementById("cover");
@@ -33,6 +34,12 @@ const nextBtn = document.getElementById("next");
 const prevBtn = document.getElementById("prev");
 const shuffleBtn = document.getElementById("shuffle");
 const repeatBtn = document.getElementById("repeat");
+
+// Suche im Menue
+const searchInput = document.getElementById("search");
+const artistsEl = document.getElementById("artists");
+const songListEl = document.getElementById("songList");
+
 
 // 🎚 AUDIO CONTEXT & EQUALIZER
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -187,6 +194,72 @@ document.getElementById("treble").oninput = e => {
     trebleFilter.gain.value = e.target.value;
 };
 
+ // Artists anzeigen (Playlists) 
+function renderArtists() {
+    artistsEl.innerHTML = "";
+    artists.forEach(artist => {
+        const div = document.createElement("div");
+        div.className = "artist";
+        div.textContent = artist;
+
+        div.onclick = () => {
+            renderSongs(songs.filter(s => s.artist === artist));
+        };
+
+        artistsEl.appendChild(div);
+    });
+}
+// Songs anzeigen (filterbar)
+function renderSongs(list) {
+    songListEl.innerHTML = "";
+
+    list.forEach((s, i) => {
+        const row = document.createElement("div");
+        row.className = "song";
+
+        const name = document.createElement("span");
+        name.textContent = `${s.title} – ${s.artist}`;
+        name.onclick = () => {
+            const index = songs.indexOf(s);
+            loadSong(index);
+            audio.play();
+            playBtn.textContent = "⏸";
+        };
+
+        const heart = document.createElement("span");
+        heart.textContent = favorites.includes(i) ? "❤️" : "🤍";
+        heart.onclick = () => toggleFavorite(i, heart);
+
+        row.append(name, heart);
+        songListEl.appendChild(row);
+    });
+}
+
+function toggleFavorite(i, el) {
+    if (favorites.includes(i)) {
+        favorites = favorites.filter(x => x !== i);
+        el.textContent = "🤍";
+    } else {
+        favorites.push(i);
+        el.textContent = "❤️";
+    }
+    localStorage.setItem("fav", JSON.stringify(favorites));
+}
+
+  
+// Suche live
+searchInput.oninput = e => {
+    const q = e.target.value.toLowerCase();
+
+    renderSongs(
+        songs.filter(s =>
+            s.title.toLowerCase().includes(q) ||
+            s.artist.toLowerCase().includes(q)
+        )
+    );
+};
+  
+  
  //  Visualizer-Logik
 const canvas = document.getElementById("visualizer");
 const ctx = canvas.getContext("2d");
@@ -248,3 +321,6 @@ drawVisualizer();
 });
 
 loadSong(0);
+renderArtists();
+renderSongs(songs);
+  
