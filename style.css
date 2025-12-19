@@ -95,3 +95,16 @@ body {
     width: 100%;
 }
 
+#visualizer {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(circle at center, #1db95422, #121212 70%);
+}
+
+.player {
+    position: relative;
+    z-index: 2;
+}
+
+
