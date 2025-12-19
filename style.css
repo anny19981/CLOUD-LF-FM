@@ -79,3 +79,19 @@ body {
 .track span {
     cursor: pointer;
 }
+
+.equalizer {
+    margin-top: 25px;
+}
+
+.equalizer label {
+    display: block;
+    font-size: 13px;
+    color: #aaa;
+    margin-top: 10px;
+}
+
+.equalizer input {
+    width: 100%;
+}
+
