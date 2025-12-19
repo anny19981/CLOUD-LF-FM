@@ -61,6 +61,15 @@ source
   .connect(trebleFilter)
   .connect(audioCtx.destination);
 
+// 📊 ANALYSER NODE (Visualizer)
+const analyser = audioCtx.createAnalyser();
+analyser.fftSize = 256;
+
+trebleFilter.connect(analyser);
+analyser.connect(audioCtx.destination);
+
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
 
 let index = 0;
 let shuffle = false;
@@ -177,6 +186,63 @@ document.getElementById("mid").oninput = e => {
 document.getElementById("treble").oninput = e => {
     trebleFilter.gain.value = e.target.value;
 };
+
+ //  Visualizer-Logik
+const canvas = document.getElementById("visualizer");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+function drawVisualizer() {
+    requestAnimationFrame(drawVisualizer);
+
+    analyser.getByteFrequencyData(dataArray);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const barWidth = (canvas.width / bufferLength) * 1.8;
+    let x = 0;
+
+    for (let i = 0; i < bufferLength; i++) {
+        const barHeight = dataArray[i] * 0.9;
+
+        ctx.fillStyle = `rgba(29,185,84,0.35)`;
+        ctx.fillRect(
+            x,
+            canvas.height - barHeight,
+            barWidth,
+            barHeight
+        );
+
+        x += barWidth + 1;
+    }
+}
+// Wellenform statt Spectrum
+//analyser.getByteTimeDomainData(dataArray);
+
+//ctx.beginPath();
+///ctx.lineWidth = 2;
+
+//const slice = canvas.width / bufferLength;
+//let x = 0;
+
+//for (let i = 0; i < bufferLength; i++) {
+//    const v = dataArray[i] / 128.0;
+ //   const y = (v * canvas.height) / 2;
+
+ //   i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+ //   x += slice;
+//}
+
+//ctx.lineTo(canvas.width, canvas.height / 2);
+//ctx.stroke();
+
+drawVisualizer();
 
   
 });
