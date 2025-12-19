@@ -108,18 +108,26 @@ body {
 }
 
 .menu {
-    margin-top: 20px;
+    position: relative;
+    z-index: 3;
+    background: rgba(18,18,18,0.9);
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 15px;
 }
+
 
 .menu input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border-radius: 20px;
     border: none;
     outline: none;
     background: #282828;
     color: white;
+    margin-bottom: 10px;
 }
+
 
 .library h3 {
     margin: 15px 0 5px;
@@ -129,15 +137,15 @@ body {
 
 .artist,
 .song {
-    padding: 8px 5px;
+    padding: 10px;
     cursor: pointer;
-    border-bottom: 1px solid #222;
-    display: flex;
-    justify-content: space-between;
+    border-bottom: 1px solid #333;
+    color: white;
 }
 
 .artist:hover,
 .song:hover {
     background: #1e1e1e;
 }
+
 
