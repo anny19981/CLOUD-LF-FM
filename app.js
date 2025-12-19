@@ -1,0 +1,139 @@
+const songs = [
+  {
+    title: "Song Eins",
+    artist: "Artist A",
+    file: "song1.mp3",
+    cover: "cover1.jpg"
+  },
+  {
+    title: "Song Zwei",
+    artist: "Artist B",
+    file: "song2.mp3",
+    cover: "cover2.jpg"
+  },
+  {
+    title: "Song Drei",
+    artist: "Artist C",
+    file: "song3.mp3",
+    cover: "cover3.jpg"
+  }
+];
+
+const audio = document.getElementById("audio");
+const cover = document.getElementById("cover");
+const titleEl = document.getElementById("title");
+const artistEl = document.getElementById("artist");
+const progress = document.getElementById("progress");
+const currentEl = document.getElementById("current");
+const durationEl = document.getElementById("duration");
+const playlistEl = document.getElementById("playlist");
+
+const playBtn = document.getElementById("play");
+const nextBtn = document.getElementById("next");
+const prevBtn = document.getElementById("prev");
+const shuffleBtn = document.getElementById("shuffle");
+const repeatBtn = document.getElementById("repeat");
+
+let index = 0;
+let shuffle = false;
+let repeat = false;
+let favorites = JSON.parse(localStorage.getItem("fav")) || [];
+
+function loadSong(i) {
+    index = i;
+    const s = songs[i];
+    audio.src = s.file;
+    titleEl.textContent = s.title;
+    artistEl.textContent = s.artist;
+    cover.style.backgroundImage = `url(${s.cover})`;
+}
+
+function playPause() {
+    if (audio.paused) {
+        audio.play();
+        playBtn.textContent = "⏸";
+    } else {
+        audio.pause();
+        playBtn.textContent = "▶️";
+    }
+}
+
+function nextSong() {
+    index = shuffle
+        ? Math.floor(Math.random() * songs.length)
+        : (index + 1) % songs.length;
+
+    loadSong(index);
+    audio.play();
+}
+
+function prevSong() {
+    index = (index - 1 + songs.length) % songs.length;
+    loadSong(index);
+    audio.play();
+}
+
+audio.addEventListener("ended", () => {
+    repeat ? audio.play() : nextSong();
+});
+
+audio.addEventListener("timeupdate", () => {
+    progress.value = (audio.currentTime / audio.duration) * 100 || 0;
+    currentEl.textContent = format(audio.currentTime);
+    durationEl.textContent = format(audio.duration);
+});
+
+progress.oninput = () => {
+    audio.currentTime = (progress.value / 100) * audio.duration;
+};
+
+shuffleBtn.onclick = () => {
+    shuffle = !shuffle;
+    shuffleBtn.classList.toggle("active", shuffle);
+};
+
+repeatBtn.onclick = () => {
+    repeat = !repeat;
+    repeatBtn.classList.toggle("active", repeat);
+};
+
+playBtn.onclick = playPause;
+nextBtn.onclick = nextSong;
+prevBtn.onclick = prevSong;
+
+function format(t) {
+    if (!t) return "0:00";
+    return Math.floor(t / 60) + ":" + String(Math.floor(t % 60)).padStart(2, "0");
+}
+
+// Playlist + Favoriten
+songs.forEach((s, i) => {
+    const row = document.createElement("div");
+    row.className = "track";
+
+    const name = document.createElement("span");
+    name.textContent = s.title;
+    name.onclick = () => {
+        loadSong(i);
+        audio.play();
+        playBtn.textContent = "⏸";
+    };
+
+    const heart = document.createElement("span");
+    heart.textContent = favorites.includes(i) ? "❤️" : "🤍";
+    heart.onclick = () => {
+        if (favorites.includes(i)) {
+            favorites = favorites.filter(x => x !== i);
+            heart.textContent = "🤍";
+        } else {
+            favorites.push(i);
+            heart.textContent = "❤️";
+        }
+        localStorage.setItem("fav", JSON.stringify(favorites));
+    };
+
+    row.append(name, heart);
+    playlistEl.appendChild(row);
+});
+
+loadSong(0);
