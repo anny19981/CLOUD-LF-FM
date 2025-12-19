@@ -77,6 +77,10 @@ function loadSong(i) {
 }
 
 function playPause() {
+    if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+    }
+
     if (audio.paused) {
         audio.play();
         playBtn.textContent = "⏸";
