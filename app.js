@@ -1,8 +1,8 @@
 const songs = [
   {
-    title: "Song Eins",
-    artist: "Artist A",
-    file: "song1.mp3",
+    title: "Boys4Life",
+    artist: "Rolexander",
+    file: "boys-4-life-(remastered).mp3",
     cover: "cover1.jpg"
   },
   {
