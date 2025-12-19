@@ -1,24 +1,26 @@
 const songs = [
   {
+    id: 0,
     title: "Boys4Life",
     artist: "Rolexander",
     file: "boys-4-life-(remastered).mp3",
     cover: "cover1.jpg"
   },
   {
+    id: 1,
     title: "Song Zwei",
     artist: "Artist B",
     file: "song2.mp3",
     cover: "cover2.jpg"
   },
   {
+    id: 2,
     title: "Song Drei",
     artist: "Artist C",
     file: "song3.mp3",
     cover: "cover3.jpg"
   }
 ];
-const artists = [...new Set(songs.map(s => s.artist))];
 
 const audio = document.getElementById("audio");
 const cover = document.getElementById("cover");
@@ -197,50 +199,54 @@ document.getElementById("treble").oninput = e => {
  // Artists anzeigen (Playlists) 
 function renderArtists() {
     artistsEl.innerHTML = "";
-    artists.forEach(artist => {
+
+    const artistNames = [...new Set(songs.map(s => s.artist))];
+
+    artistNames.forEach(name => {
         const div = document.createElement("div");
         div.className = "artist";
-        div.textContent = artist;
+        div.textContent = name;
 
         div.onclick = () => {
-            renderSongs(songs.filter(s => s.artist === artist));
+            renderSongs(songs.filter(s => s.artist === name));
         };
 
         artistsEl.appendChild(div);
     });
 }
+
 // Songs anzeigen (filterbar)
 function renderSongs(list) {
     songListEl.innerHTML = "";
 
-    list.forEach((s, i) => {
+    list.forEach(song => {
         const row = document.createElement("div");
         row.className = "song";
 
-        const name = document.createElement("span");
-        name.textContent = `${s.title} – ${s.artist}`;
-        name.onclick = () => {
-            const index = songs.indexOf(s);
-            loadSong(index);
+        const title = document.createElement("span");
+        title.textContent = `${song.title} – ${song.artist}`;
+        title.onclick = () => {
+            loadSong(song.id);
             audio.play();
             playBtn.textContent = "⏸";
         };
 
         const heart = document.createElement("span");
-        heart.textContent = favorites.includes(i) ? "❤️" : "🤍";
-        heart.onclick = () => toggleFavorite(i, heart);
+        heart.textContent = favorites.includes(song.id) ? "❤️" : "🤍";
+        heart.onclick = () => toggleFavorite(song.id, heart);
 
-        row.append(name, heart);
+        row.append(title, heart);
         songListEl.appendChild(row);
     });
 }
 
-function toggleFavorite(i, el) {
-    if (favorites.includes(i)) {
-        favorites = favorites.filter(x => x !== i);
+
+function toggleFavorite(id, el) {
+    if (favorites.includes(id)) {
+        favorites = favorites.filter(x => x !== id);
         el.textContent = "🤍";
     } else {
-        favorites.push(i);
+        favorites.push(id);
         el.textContent = "❤️";
     }
     localStorage.setItem("fav", JSON.stringify(favorites));
