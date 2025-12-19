@@ -2,185 +2,38 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>CLOUD ÖÖLF</title>
-
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: #121212;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.player {
-    width: 350px;
-    background: #181818;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-h2 {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.controls {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 15px 0;
-}
-
-button {
-    background: #1db954;
-    border: none;
-    color: black;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #1ed760;
-}
-
-.progress {
-    width: 100%;
-}
-
-.time {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-}
-
-.volume {
-    width: 100%;
-    margin-top: 10px;
-}
-
-.playlist {
-    margin-top: 15px;
-}
-
-.playlist div {
-    padding: 8px;
-    cursor: pointer;
-    border-bottom: 1px solid #333;
-}
-
-.playlist div:hover {
-    background: #282828;
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Music Player</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="player">
-    <h2 id="title">Song Titel</h2>
+    <div class="cover" id="cover"></div>
 
-    <audio id="audio"></audio>
+    <div class="title" id="title"></div>
+    <div class="artist" id="artist"></div>
 
     <input type="range" id="progress" class="progress" value="0">
-
     <div class="time">
         <span id="current">0:00</span>
         <span id="duration">0:00</span>
     </div>
 
     <div class="controls">
-        <button onclick="prevSong()">⏮</button>
-        <button onclick="togglePlay()">▶️</button>
-        <button onclick="nextSong()">⏭</button>
+        <button id="shuffle">🔀</button>
+        <button id="prev">⏮</button>
+        <button class="play" id="play">▶️</button>
+        <button id="next">⏭</button>
+        <button id="repeat">🔁</button>
     </div>
-
-    <input type="range" class="volume" min="0" max="1" step="0.01" value="1" onchange="audio.volume=this.value">
 
     <div class="playlist" id="playlist"></div>
 </div>
 
-<script>
-// 🔴 HIER DEINE MP3s EINTRAGEN
-const songs = [
-    { title: "boys-4-life", file: "boys-4-life-(remastered).mp3" },
-    { title: "Mein Song 2", file: "song2.mp3" },
-    { title: "Mein Song 3", file: "song3.mp3" }
-];
+<audio id="audio"></audio>
 
-const audio = document.getElementById("audio");
-const title = document.getElementById("title");
-const progress = document.getElementById("progress");
-const currentTimeEl = document.getElementById("current");
-const durationEl = document.getElementById("duration");
-const playlistEl = document.getElementById("playlist");
-
-let currentSong = 0;
-let isPlaying = false;
-
-function loadSong(index) {
-    currentSong = index;
-    audio.src = songs[index].file;
-    title.textContent = songs[index].title;
-    audio.load();
-    audio.play();
-    isPlaying = true;
-}
-
-function togglePlay() {
-    if (isPlaying) {
-        audio.pause();
-    } else {
-        audio.play();
-    }
-    isPlaying = !isPlaying;
-}
-
-function nextSong() {
-    currentSong = (currentSong + 1) % songs.length;
-    loadSong(currentSong);
-}
-
-function prevSong() {
-    currentSong = (currentSong - 1 + songs.length) % songs.length;
-    loadSong(currentSong);
-}
-
-audio.addEventListener("timeupdate", () => {
-    progress.value = (audio.currentTime / audio.duration) * 100 || 0;
-
-    currentTimeEl.textContent = formatTime(audio.currentTime);
-    durationEl.textContent = formatTime(audio.duration);
-});
-
-progress.addEventListener("input", () => {
-    audio.currentTime = (progress.value / 100) * audio.duration;
-});
-
-audio.addEventListener("ended", nextSong);
-
-function formatTime(time) {
-    if (!time) return "0:00";
-    const min = Math.floor(time / 60);
-    const sec = Math.floor(time % 60).toString().padStart(2, "0");
-    return `${min}:${sec}`;
-}
-
-// Playlist anzeigen
-songs.forEach((song, index) => {
-    const div = document.createElement("div");
-    div.textContent = song.title;
-    div.onclick = () => loadSong(index);
-    playlistEl.appendChild(div);
-});
-
-// Startsong laden
-loadSong(0);
-</script>
-
+<script src="app.js"></script>
 </body>
 </html>
