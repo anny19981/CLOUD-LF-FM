@@ -34,6 +34,34 @@ const prevBtn = document.getElementById("prev");
 const shuffleBtn = document.getElementById("shuffle");
 const repeatBtn = document.getElementById("repeat");
 
+// 🎚 AUDIO CONTEXT & EQUALIZER
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+
+const source = audioCtx.createMediaElementSource(audio);
+
+// Filter
+const bassFilter = audioCtx.createBiquadFilter();
+bassFilter.type = "lowshelf";
+bassFilter.frequency.value = 200;
+
+const midFilter = audioCtx.createBiquadFilter();
+midFilter.type = "peaking";
+midFilter.frequency.value = 1000;
+midFilter.Q.value = 1;
+
+const trebleFilter = audioCtx.createBiquadFilter();
+trebleFilter.type = "highshelf";
+trebleFilter.frequency.value = 3000;
+
+// Verkabelung
+source
+  .connect(bassFilter)
+  .connect(midFilter)
+  .connect(trebleFilter)
+  .connect(audioCtx.destination);
+
+
 let index = 0;
 let shuffle = false;
 let repeat = false;
@@ -134,6 +162,19 @@ songs.forEach((s, i) => {
 
     row.append(name, heart);
     playlistEl.appendChild(row);
+  document.getElementById("bass").oninput = e => {
+    bassFilter.gain.value = e.target.value;
+};
+
+document.getElementById("mid").oninput = e => {
+    midFilter.gain.value = e.target.value;
+};
+
+document.getElementById("treble").oninput = e => {
+    trebleFilter.gain.value = e.target.value;
+};
+
+  
 });
 
 loadSong(0);
