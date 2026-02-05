@@ -6,7 +6,6 @@
 <title>CLOUD ÖÖLF</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 <canvas id="visualizer"></canvas>
 
@@ -20,23 +19,17 @@
 <div class="player">
     <div class="menu">
         <input id="search" placeholder="Songs oder Artists suchen">
-
-        <!-- Artists View -->
         <div id="view-artists">
             <h3>🎤 Artists</h3>
             <div id="artists"></div>
         </div>
-
-        <!-- Songs View -->
         <div id="view-songs">
             <h3>🎵 Songs</h3>
             <div id="songList"></div>
         </div>
-
-        <!-- Playlist View -->
         <div id="view-playlist">
             <h3>❤️ Playlist</h3>
-            <div id="playlistList"></div>
+            <div id="playlist"></div>
         </div>
     </div>
 
@@ -61,16 +54,15 @@
     <div class="equalizer">
         <label>Bass</label>
         <input type="range" id="bass" min="-30" max="30" value="0">
-
         <label>Mitten</label>
         <input type="range" id="mid" min="-30" max="30" value="0">
-
         <label>Höhen</label>
         <input type="range" id="treble" min="-30" max="30" value="0">
     </div>
 </div>
 
 <audio id="audio"></audio>
+
 <script src="app.js"></script>
 </body>
 </html>
