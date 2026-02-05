@@ -8,10 +8,10 @@
 </head>
 <body>
 
-<!-- Visualizer Hintergrund -->
+<!-- VISUALIZER -->
 <canvas id="visualizer"></canvas>
 
-<!-- Sidebar Navigation -->
+<!-- SIDEBAR -->
 <div class="sidebar">
     <a class="active" href="#" data-view="home">Home</a>
     <a href="#" data-view="songs">Songs</a>
@@ -19,40 +19,45 @@
     <a href="#" data-view="artists">Artists</a>
 </div>
 
-<!-- Haupt Player -->
+<!-- PLAYER & CONTENT -->
 <div class="player">
+
+    <!-- MENU / SEARCH -->
     <div class="menu">
-        <input id="search" placeholder="Songs oder Artists suchen...">
-        
+        <input id="search" placeholder="Songs oder Artists suchen">
+
+        <!-- Artists View -->
         <div id="view-artists">
             <h3>🎤 Artists</h3>
             <div id="artists"></div>
         </div>
 
+        <!-- Songs View -->
         <div id="view-songs">
             <h3>🎵 Songs</h3>
             <div id="songList"></div>
         </div>
 
+        <!-- Playlist View -->
         <div id="view-playlist">
             <h3>❤️ Playlist</h3>
             <div id="playlist"></div>
         </div>
     </div>
 
-    <!-- Cover & Infos -->
+    <!-- COVER & INFO -->
     <div class="cover" id="cover"></div>
     <div class="title" id="title"></div>
     <div class="artist" id="artist"></div>
 
-    <!-- Progress Bar -->
+    <!-- PROGRESS -->
     <input type="range" id="progress" class="progress" value="0">
     <div class="time">
         <span id="current">0:00</span>
         <span id="duration">0:00</span>
     </div>
 
-    <!-- Controls -->
+    <!-- CONTROLS -->
     <div class="controls">
         <button id="shuffle">🔀</button>
         <button id="prev">⏮</button>
@@ -61,20 +66,12 @@
         <button id="repeat">🔁</button>
     </div>
 
-    <!-- Equalizer -->
-    <div class="equalizer">
-        <label>Bass</label>
-        <input type="range" id="bass" min="-30" max="30" value="0">
-        <label>Mitten</label>
-        <input type="range" id="mid" min="-30" max="30" value="0">
-        <label>Höhen</label>
-        <input type="range" id="treble" min="-30" max="30" value="0">
-    </div>
 </div>
 
-<!-- Audio Element -->
+<!-- AUDIO ELEMENT -->
 <audio id="audio"></audio>
 
+<!-- SCRIPT -->
 <script src="app.js"></script>
 </body>
 </html>
