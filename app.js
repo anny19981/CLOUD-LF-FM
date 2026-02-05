@@ -12,7 +12,9 @@ const songs = [
   { id: 10, title: "Oh Philip", artist: "Rolexander", file: "oh-philip.mp3", cover: "cover3.jpg" },
   { id: 11, title: "Meine Jungs", artist: "Rolexander", file: "meine-jungs.mp3", cover: "cover3.jpg" }
 ];
-
+for(let i=0;i<=20;i++){
+  songs.push({id:i,title:`Song ${i}`,artist:`Artist ${i%5}`,file:`song${i}.mp3`,cover:`cover${i%5}.jpg`});
+}
 const audio = document.getElementById("audio");
 const cover = document.getElementById("cover");
 const titleEl = document.getElementById("title");
@@ -39,14 +41,16 @@ let shuffle = false;
 let repeat = false;
 let favorites = JSON.parse(localStorage.getItem("fav")) || [];
 
-// --- SONG LOAD ---
-function loadSong(i) {
-  index = i;
-  const s = songs[i];
-  audio.src = s.file;
-  titleEl.textContent = s.title;
-  artistEl.textContent = s.artist;
-  cover.style.backgroundImage = `url(${s.cover})`;
+// --- Song laden ---
+function loadSong(i){
+  currentIndex=i;
+  const s=songs[i];
+  audio.src=s.file;
+  titleEl.textContent=s.title;
+  artistEl.textContent=s.artist;
+  cover.style.backgroundImage=`url(${s.cover})`;
+  audio.play();
+  document.getElementById("play").textContent="⏸";
 }
 
 // --- PLAY / PAUSE ---
@@ -96,22 +100,16 @@ prevBtn.onclick = prevSong;
 // --- FORMAT TIME ---
 function format(t) { return !t ? "0:00" : Math.floor(t / 60) + ":" + String(Math.floor(t % 60)).padStart(2, "0"); }
 
-// --- RENDER SONGS ---
-function renderSongs(list) {
-  songListEl.innerHTML = "";
-  list.forEach(song => {
-    const row = document.createElement("div");
-    row.className = "song";
-
-    const title = document.createElement("span");
-    title.textContent = `${song.title} – ${song.artist}`;
-    title.onclick = () => { loadSong(song.id); audio.play(); playBtn.textContent = "⏸"; };
-
-    const heart = document.createElement("span");
-    heart.textContent = favorites.includes(song.id) ? "❤️" : "🤍";
-    heart.onclick = () => toggleFavorite(song.id, heart);
-
-    row.append(title, heart);
+// --- Songs rendern ---
+function renderSongs(list){
+  songListEl.innerHTML="";
+  list.forEach(song=>{
+    const row=document.createElement("div");
+    row.className="song";
+    const title=document.createElement("span");
+    title.textContent=`${song.title} – ${song.artist}`;
+    title.onclick=()=>loadSong(song.id);
+    row.appendChild(title);
     songListEl.appendChild(row);
   });
 }
@@ -144,18 +142,32 @@ function showView(id) {
   if (el) el.classList.add("view-active");
 }
 
-sidebarLinks.forEach(link => {
-  link.addEventListener("click", e => {
+// --- Sidebar Klicks ---
+sidebarLinks.forEach(link=>{
+  link.addEventListener("click",e=>{
     e.preventDefault();
-    sidebarLinks.forEach(l => l.classList.remove("active"));
+    sidebarLinks.forEach(l=>l.classList.remove("active"));
     link.classList.add("active");
-
-    const view = link.dataset.view;
-    if (view === "songs") renderSongs(songs);
-    if (view === "artists") renderArtists();
-    showView("view-" + view);
+    const view=link.dataset.view;
+    document.querySelectorAll("#view-artists,#view-songs,#view-playlist")
+      .forEach(v=>{
+        v.classList.remove("view-active");
+        if(view==="songs" && v.id==="view-songs") v.classList.add("view-active");
+        if(view==="artists" && v.id==="view-artists") v.classList.add("view-active");
+        if(view==="playlist" && v.id==="view-playlist") v.classList.add("view-active");
+      });
+    if(view==="songs") renderSongs(songs);
   });
 });
+
+// --- Audio Controls ---
+const playBtn=document.getElementById("play");
+playBtn.onclick=()=>{ audio.paused?audio.play():audio.pause(); playBtn.textContent=audio.paused?"▶️":"⏸"; };
+
+document.getElementById("next").onclick=()=>{ currentIndex=(currentIndex+1)%songs.length; loadSong(currentIndex); };
+document.getElementById("prev").onclick=()=>{ currentIndex=(currentIndex-1+songs.length)%songs.length; loadSong(currentIndex); };
+
+// --- Initial load ---
 
 // --- LIVE SEARCH ---
 searchInput.oninput = e => {
@@ -164,5 +176,6 @@ searchInput.oninput = e => {
 };
 
 // --- INIT ---
+renderSongs(songs);
 loadSong(0);
 renderArtists();
