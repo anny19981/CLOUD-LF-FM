@@ -88,14 +88,14 @@ const songs = [
     id: 12,
     title: "Megabonk",
     artist: "Rolexander",
-    file: "megabonk.mp3.mpeg",
+    file: "megabonk.mp3.",
     cover: "cover3.jpg"
   }
 {
     id: 13,
     title: "Ich und meine Jungs",
     artist: "Rolexander",
-    file: "ich und meine jungs.mp3.mpeg",
+    file: "ich-und-meine-jungs--(remastered).mp3",
     cover: "cover3.jpg"
   }
 ];
