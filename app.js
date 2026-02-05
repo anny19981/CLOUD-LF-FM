@@ -97,7 +97,7 @@ const songs = [
     artist: "Rolexander",
     file: "ich-und-meine-jungs--(remastered).mp3",
     cover: "cover3.jpg"
-  }
+  },
 ];
 
 const audio = document.getElementById("audio");
