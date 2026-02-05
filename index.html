@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -6,58 +7,32 @@
 <title>CLOUD ÖÖLF</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-<!-- VISUALIZER -->
+<body>
 <canvas id="visualizer"></canvas>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-    <a class="active" href="#" data-view="home">Home</a>
-    <a href="#" data-view="songs">Songs</a>
-    <a href="#" data-view="playlist">Playlist</a>
-    <a href="#" data-view="artists">Artists</a>
-</div>
 
-<!-- PLAYER & CONTENT -->
 <div class="player">
-
-    <!-- MENU / SEARCH -->
     <div class="menu">
-        <input id="search" placeholder="Songs oder Artists suchen">
+    <input id="search" placeholder="Songs oder Artists suchen">
 
-        <!-- Artists View -->
-        <div id="view-artists">
-            <h3>🎤 Artists</h3>
-            <div id="artists"></div>
-        </div>
+    <h3>🎤 Artists</h3>
+    <div id="artists"></div>
 
-        <!-- Songs View -->
-        <div id="view-songs">
-            <h3>🎵 Songs</h3>
-            <div id="songList"></div>
-        </div>
-
-        <!-- Playlist View -->
-        <div id="view-playlist">
-            <h3>❤️ Playlist</h3>
-            <div id="playlist"></div>
-        </div>
-    </div>
-
-    <!-- COVER & INFO -->
+    <h3>🎵 Songs</h3>
+    <div id="songList"></div>
+</div>
     <div class="cover" id="cover"></div>
+
     <div class="title" id="title"></div>
     <div class="artist" id="artist"></div>
 
-    <!-- PROGRESS -->
     <input type="range" id="progress" class="progress" value="0">
     <div class="time">
         <span id="current">0:00</span>
         <span id="duration">0:00</span>
     </div>
 
-    <!-- CONTROLS -->
     <div class="controls">
         <button id="shuffle">🔀</button>
         <button id="prev">⏮</button>
@@ -66,12 +41,23 @@
         <button id="repeat">🔁</button>
     </div>
 
+    <div class="equalizer">
+    <label>Bass</label>
+    <input type="range" id="bass" min="-30" max="30" value="0">
+
+    <label>Mitten</label>
+    <input type="range" id="mid" min="-30" max="30" value="0">
+
+    <label>Höhen</label>
+    <input type="range" id="treble" min="-30" max="30" value="0">
 </div>
 
-<!-- AUDIO ELEMENT -->
+
+    <div class="playlist" id="playlist"></div>
+</div>
+
 <audio id="audio"></audio>
 
-<!-- SCRIPT -->
 <script src="app.js"></script>
 </body>
 </html>
