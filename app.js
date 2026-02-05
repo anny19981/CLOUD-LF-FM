@@ -14,14 +14,15 @@ const songs = [
   { id: 11, title: "Meine Jungs", artist: "Rolexander", file: "meine-jungs.mp3", cover: "cover3.jpg" }
 ];
 
+
 // Weitere Songs automatisch hinzufügen, bis id=20
 for (let i = 3; i <= 20; i++) {
   songs.push({
     id: i,
     title: `Song ${i}`,
-    artist: `Artist ${i%5}`,
+    artist: `Artist ${i % 5}`,
     file: `song${i}.mp3`,
-    cover: `cover${i%5}.jpg`
+    cover: `cover${i % 5}.jpg`
   });
 }
 
@@ -36,11 +37,49 @@ const durationEl = document.getElementById("duration");
 const songListEl = document.getElementById("songList");
 const sidebarLinks = document.querySelectorAll(".sidebar a");
 const searchInput = document.getElementById("search");
+const canvas = document.getElementById("visualizer");
+const ctx = canvas.getContext("2d");
 
 // --- STATE ---
 let index = 0;
 let shuffle = false;
 let repeat = false;
+
+// --- AUDIO CONTEXT & VISUALIZER ---
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const source = audioCtx.createMediaElementSource(audio);
+const analyser = audioCtx.createAnalyser();
+source.connect(analyser);
+analyser.connect(audioCtx.destination);
+analyser.fftSize = 256;
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
+
+// --- CANVAS RESIZE ---
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+// --- DRAW VISUALIZER ---
+function drawVisualizer(){
+  requestAnimationFrame(drawVisualizer);
+  analyser.getByteFrequencyData(dataArray);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  const barWidth = (canvas.width / bufferLength) * 1.5;
+  let x = 0;
+
+  for(let i=0;i<bufferLength;i++){
+    const barHeight = dataArray[i] * 0.8;
+    ctx.fillStyle = `rgba(29,185,84,0.6)`;
+    ctx.fillRect(x, canvas.height-barHeight, barWidth, barHeight);
+    x += barWidth + 1;
+  }
+}
+drawVisualizer();
 
 // --- SONG LADEN ---
 function loadSong(i){
@@ -52,6 +91,7 @@ function loadSong(i){
   cover.style.backgroundImage = `url(${s.cover})`;
   audio.play();
   document.getElementById("play").textContent = "⏸";
+  if(audioCtx.state === 'suspended') audioCtx.resume();
 }
 
 // --- PLAY / PAUSE ---
@@ -100,7 +140,7 @@ sidebarLinks.forEach(link=>{
     if(view==="songs") { renderSongs(songs); showView("view-songs"); }
     if(view==="artists") showView("view-artists");
     if(view==="playlist") showView("view-playlist");
-    if(view==="home") showView("view-artists"); // Home = Artists
+    if(view==="home") showView("view-artists"); 
   });
 });
 
@@ -122,7 +162,7 @@ searchInput.oninput = e => {
   renderSongs(songs.filter(s => s.title.toLowerCase().includes(q) || s.artist.toLowerCase().includes(q)));
 }
 
-// --- INITIAL ---
+// --- INIT ---
 renderSongs(songs);
 loadSong(0);
 showView("view-songs");
