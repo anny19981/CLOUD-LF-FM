@@ -10,17 +10,33 @@
 <body>
 <canvas id="visualizer"></canvas>
 
+<div class="sidebar">
+    <a class="active" href="#" data-view="home">Home</a>
+    <a href="#" data-view="songs">Songs</a>
+    <a href="#" data-view="playlist">Playlist</a>
+    <a href="#" data-view="artists">Artists</a>
+</div>
 
 <div class="player">
     <div class="menu">
-    <input id="search" placeholder="Songs oder Artists suchen">
+        <input id="search" placeholder="Songs oder Artists suchen">
 
-    <h3>🎤 Artists</h3>
-    <div id="artists"></div>
+        <div id="view-artists">
+            <h3>🎤 Artists</h3>
+            <div id="artists"></div>
+        </div>
 
-    <h3>🎵 Songs</h3>
-    <div id="songList"></div>
-</div>
+        <div id="view-songs">
+            <h3>🎵 Songs</h3>
+            <div id="songList"></div>
+        </div>
+
+        <div id="view-playlist">
+            <h3>❤️ Playlist</h3>
+            <div id="playlist-view"></div>
+        </div>
+    </div>
+
     <div class="cover" id="cover"></div>
 
     <div class="title" id="title"></div>
@@ -41,22 +57,17 @@
     </div>
 
     <div class="equalizer">
-    <label>Bass</label>
-    <input type="range" id="bass" min="-30" max="30" value="0">
+        <label>Bass</label>
+        <input type="range" id="bass" min="-30" max="30" value="0">
+        <label>Mitten</label>
+        <input type="range" id="mid" min="-30" max="30" value="0">
+        <label>Höhen</label>
+        <input type="range" id="treble" min="-30" max="30" value="0">
+    </div>
 
-    <label>Mitten</label>
-    <input type="range" id="mid" min="-30" max="30" value="0">
-
-    <label>Höhen</label>
-    <input type="range" id="treble" min="-30" max="30" value="0">
-</div>
-
-
-    <div class="playlist" id="playlist"></div>
 </div>
 
 <audio id="audio"></audio>
-
 <script src="app.js"></script>
 </body>
 </html>
