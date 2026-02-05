@@ -5,10 +5,59 @@ body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont;
 }
 
+/* sidebar navigations menü */
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: radial-gradient(circle at center, #1db95422, #121212 70%);
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+/* sidebar links */
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.sidebar a.active {
+    background-color: rgb(16, 68, 25);
+    color: white;
+}
+
+/* Responsive */
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar a { float: left; }
+}
+
+@media screen and (max-width: 400px) {
+    .sidebar a { text-align: center; float: none; }
+}
+
+/* Views initial hidden */
+#view-artists, #view-songs, #view-playlist {
+    display: none;
+}
+
+.view-active {
+    display: block;
+}
+
 .player {
     max-width: 400px;
     margin: auto;
     padding: 20px;
+    position: relative;
+    z-index: 2;
 }
 
 .cover {
@@ -57,54 +106,34 @@ body {
     cursor: pointer;
 }
 
-.play {
-    font-size: 36px;
+.play { font-size: 36px; }
+
+.playlist, #songList, #artists, #playlist-view {
+    margin-top: 15px;
 }
 
-.active {
-    color: #1db954;
-}
-
-.playlist {
-    margin-top: 25px;
-}
-
-.track {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #222;
-}
-
-.track span {
+.artist, .song, .track {
+    padding: 10px;
     cursor: pointer;
+    border-bottom: 1px solid #333;
+    color: white;
 }
 
-.equalizer {
-    margin-top: 25px;
+.artist:hover, .song:hover, .track:hover {
+    background: #1e1e1e;
 }
 
-.equalizer label {
-    display: block;
-    font-size: 13px;
-    color: #aaa;
-    margin-top: 10px;
-}
+.equalizer { margin-top: 25px; }
 
-.equalizer input {
-    width: 100%;
-}
+.equalizer label { display: block; font-size: 13px; color: #aaa; margin-top: 10px; }
+
+.equalizer input { width: 100%; }
 
 #visualizer {
     position: fixed;
     inset: 0;
     z-index: 0;
     background: radial-gradient(circle at center, #1db95422, #121212 70%);
-}
-
-.player {
-    position: relative;
-    z-index: 2;
 }
 
 .menu {
@@ -116,7 +145,6 @@ body {
     margin-bottom: 15px;
 }
 
-
 .menu input {
     width: 100%;
     padding: 12px;
@@ -127,25 +155,3 @@ body {
     color: white;
     margin-bottom: 10px;
 }
-
-
-.library h3 {
-    margin: 15px 0 5px;
-    font-size: 14px;
-    color: #aaa;
-}
-
-.artist,
-.song {
-    padding: 10px;
-    cursor: pointer;
-    border-bottom: 1px solid #333;
-    color: white;
-}
-
-.artist:hover,
-.song:hover {
-    background: #1e1e1e;
-}
-
-
