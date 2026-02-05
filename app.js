@@ -91,7 +91,7 @@ const songs = [
     file: "megabonk.mp3",
     cover: "cover3.jpg"
   },
-{
+  {
     id: 13,
     title: "Ich und meine Jungs",
     artist: "Rolexander",
