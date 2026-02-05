@@ -1,13 +1,101 @@
-/* --- BASIC --- */
+
 body {
     margin: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     background: #121212;
     color: white;
-    overflow-x: hidden;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont;
 }
 
-/* --- VISUALIZER --- */
+.player {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+}
+
+.cover {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 15px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.artist {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.progress {
+    width: 100%;
+}
+
+.time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.controls button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.play {
+    font-size: 36px;
+}
+
+.active {
+    color: #1db954;
+}
+
+.playlist {
+    margin-top: 25px;
+}
+
+.track {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #222;
+}
+
+.track span {
+    cursor: pointer;
+}
+
+.equalizer {
+    margin-top: 25px;
+}
+
+.equalizer label {
+    display: block;
+    font-size: 13px;
+    color: #aaa;
+    margin-top: 10px;
+}
+
+.equalizer input {
+    width: 100%;
+}
+
 #visualizer {
     position: fixed;
     inset: 0;
@@ -15,95 +103,48 @@ body {
     background: radial-gradient(circle at center, #1db95422, #121212 70%);
 }
 
-/* --- SIDEBAR --- */
-.sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 200px;
-    height: 100%;
-    background: #1c1c1c;
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
+.player {
+    position: relative;
     z-index: 2;
 }
-.sidebar a {
-    color: white;
-    padding: 16px;
-    text-decoration: none;
-}
-.sidebar a.active { background: #1db954; color: black; }
-.sidebar a:hover { background: #333; }
 
-/* --- PLAYER --- */
-.player {
-    margin-left: 220px;
-    padding: 20px;
+.menu {
     position: relative;
     z-index: 3;
+    background: rgba(18,18,18,0.9);
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 15px;
 }
 
-/* --- MENU / SEARCH --- */
+
 .menu input {
     width: 100%;
     padding: 12px;
     border-radius: 20px;
     border: none;
     outline: none;
-    margin-bottom: 15px;
     background: #282828;
     color: white;
+    margin-bottom: 10px;
 }
-.menu h3 { margin: 0 0 10px 0; color: #aaa; }
 
-/* --- VIEWS --- */
-#view-artists, #view-songs, #view-playlist { display: none; }
-.view-active { display: block; max-height: 300px; overflow-y: auto; }
 
-/* --- SONG / ARTIST ROW --- */
-.song, .artist {
+.library h3 {
+    margin: 15px 0 5px;
+    font-size: 14px;
+    color: #aaa;
+}
+
+.artist,
+.song {
     padding: 10px;
     cursor: pointer;
     border-bottom: 1px solid #333;
-}
-.song:hover, .artist:hover { background: #1e1e1e; }
-
-/* --- COVER & INFO --- */
-.cover {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background-size: cover;
-    background-position: center;
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
-.title { font-size: 20px; font-weight: bold; }
-.artist { font-size: 14px; color: #aaa; margin-bottom: 10px; }
-
-/* --- PROGRESS & TIME --- */
-.progress { width: 100%; }
-.time { display: flex; justify-content: space-between; font-size: 12px; color: #aaa; }
-
-/* --- CONTROLS --- */
-.controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-}
-.controls button {
-    background: none;
-    border: none;
     color: white;
-    font-size: 24px;
-    cursor: pointer;
 }
-.play { font-size: 36px; }
 
-/* --- RESPONSIVE --- */
-@media screen and (max-width: 700px) {
-    .sidebar { width: 100%; height: auto; flex-direction: row; }
-    .sidebar a { flex: 1; text-align: center; }
-    .player { margin-left: 0; }
+.artist:hover,
+.song:hover {
+    background: #1e1e1e;
 }
